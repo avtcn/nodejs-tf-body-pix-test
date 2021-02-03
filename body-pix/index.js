@@ -10,10 +10,11 @@ function RemoveBackground() {
     this.loadModel = async function loadModel() {
         if (!this.bodymodel) {
             const resNet = {
-                // architecture: 'ResNet50',
-                architecture: 'MobileNetV1',
+                architecture: 'ResNet50', // very slow
+                // architecture: 'MobileNetV1',
                 outputStride: 16,
-                quantBytes: 4
+                multiplier: 1,
+                quantBytes: 2
             };
             this.bodymodel = await bodyPix.load(resNet);
             // this.bodymodel = await bodyPix.load();
@@ -50,7 +51,8 @@ function RemoveBackground() {
 
 ; (async () => {
 
-    const img = fs.readFileSync('ty.jpg');
+    // const img = fs.readFileSync('ty.jpg');
+    const img = fs.readFileSync('images/street.png');
     var convertBG = new RemoveBackground();
 
     let res = await convertBG.removeBG(img, 'output.png');
