@@ -6,11 +6,27 @@ Based on article: https://heartbeat.fritz.ai/getting-started-with-image-segmenta
 ## Tools
 * Win 10 Command
 * node.js
-* yarn
+* npm/yarn
+
+## NodeJS Modules
+```
+C:\Users\joe\Documents\git-local\nodejs-tf-body-pix-test\body-pix>node -v
+v12.18.3
+
+C:\Users\joe\Documents\git-local\nodejs-tf-body-pix-test\body-pix>npm -v
+6.14.6
+
+C:\Users\joe\Documents\git-local\nodejs-tf-body-pix-test\body-pix>yarn -v
+1.22.10
+```
+
+### Install body-pix library
+* `npm install -g yarn`  
+* `yarn add @tensorflow/tfjs-node @tensorflow-models/body-pix fs jimp`
 
 ## Commands
 `node index.js`
 
 
-## Screenshot
+## Screenshots
 ![](result.png)
