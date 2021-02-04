@@ -63,13 +63,18 @@ function RemoveBackground() {
 ; (async () => {
 
     // const img = fs.readFileSync('ty.jpg');
-    const img = fs.readFileSync('images/street.png');
-    // const img = fs.readFileSync('images/street2.png');
-    // const img = fs.readFileSync('images/street3.png');
-    var convertBG = new RemoveBackground();
+    // const img = fs.readFileSync('images/street.png');
+    for (var i = 1; i <= 12; i++) {
+        var namein = 'images/1 (' + i + ').jpg'
+        var nameout = 'images/1 (' + i + ')_out.png'
+        const img = fs.readFileSync(namein);
+        // const img = fs.readFileSync('images/street2.png');
+        // const img = fs.readFileSync('images/street3.png');
+        var convertBG = new RemoveBackground();
 
-    let res = await convertBG.removeBG(img, 'output.png');
-    console.log(res);
+        let res = await convertBG.removeBG(img, nameout);
+        console.log(res);
+    }
 
 })().catch(error => console.log(error.message));
 
