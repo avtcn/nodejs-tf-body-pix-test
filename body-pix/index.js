@@ -64,9 +64,10 @@ function RemoveBackground() {
 
     // const img = fs.readFileSync('ty.jpg');
     // const img = fs.readFileSync('images/street.png');
-    for (var i = 1; i <= 12; i++) {
-        var namein = 'images/1 (' + i + ').jpg'
-        var nameout = 'images/1 (' + i + ')_out.png'
+    for (var i = 1; i <= 17; i++) {
+	console.log("\nProcessing image index: " + i + " ..."); 
+        var namein = 'images/people' + i + '.jpg'
+        var nameout = 'images/people' + i + '_out.png'
         const img = fs.readFileSync(namein);
         // const img = fs.readFileSync('images/street2.png');
         // const img = fs.readFileSync('images/street3.png');
