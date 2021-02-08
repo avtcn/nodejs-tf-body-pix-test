@@ -4,8 +4,8 @@ Based on article: https://heartbeat.fritz.ai/getting-started-with-image-segmenta
 
 
 ## Tools
-* Win 10 Command
-* node.js
+* Win 10 Command / Docker Ubuntu 20.04
+* Node.JS
 * npm/yarn
 
 ## NodeJS Modules
@@ -30,3 +30,6 @@ C:\Users\joe\Documents\git-local\nodejs-tf-body-pix-test\body-pix>yarn -v
 
 ## Screenshots
 ![](result.png)
+
+
+
