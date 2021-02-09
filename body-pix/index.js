@@ -34,7 +34,6 @@ function RemoveBackground() {
 
 
     this.Prediction = async function Prediction(image) {
-        await this.loadModel();
         return this.bodymodel.segmentPersonParts(image);
     }
 
@@ -54,6 +53,7 @@ function RemoveBackground() {
         }
 
         await jimp.writeAsync(output);
+        return true;
     }
 
 
@@ -64,16 +64,18 @@ function RemoveBackground() {
 
     // const img = fs.readFileSync('ty.jpg');
     // const img = fs.readFileSync('images/street.png');
+
+    var convertBG = new RemoveBackground();
+    await convertBG.loadModel();
+
     for (var i = 1; i <= 17; i++) {
 	console.log("\nProcessing image index: " + i + " ..."); 
         var namein = 'images/people' + i + '.jpg'
         var nameout = 'images/people' + i + '_out.png'
-        const img = fs.readFileSync(namein);
-        // const img = fs.readFileSync('images/street2.png');
-        // const img = fs.readFileSync('images/street3.png');
-        var convertBG = new RemoveBackground();
+        const img = fs.readFileSync(namein); 
 
         let res = await convertBG.removeBG(img, nameout);
+
         console.log(res);
     }
 
