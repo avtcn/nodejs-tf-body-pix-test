@@ -7,6 +7,7 @@ app.get('/', function (req, res) {
    res.send('Hello World from NodeJS service!');
 })
 
+// http://127.0.0.1:8080/get?first=joe&last=ge
 app.get('/get', function (req, res) {
 
 	var response = {
