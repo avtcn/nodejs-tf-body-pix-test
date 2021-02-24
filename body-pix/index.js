@@ -60,6 +60,7 @@ function RemoveBackground() {
 }
 
 
+// Test functions in loop
 ; (async () => {
 
     // const img = fs.readFileSync('ty.jpg');
@@ -69,10 +70,10 @@ function RemoveBackground() {
     await convertBG.loadModel();
 
     for (var i = 1; i <= 17; i++) {
-	console.log("\nProcessing image index: " + i + " ..."); 
+        console.log("\nProcessing image index: " + i + " ...");
         var namein = 'images/people' + i + '.jpg'
         var nameout = 'images/people' + i + '_out.png'
-        const img = fs.readFileSync(namein); 
+        const img = fs.readFileSync(namein);
 
         let res = await convertBG.removeBG(img, nameout);
 
@@ -80,6 +81,11 @@ function RemoveBackground() {
     }
 
 })().catch(error => console.log(error.message));
+
+
+
+
+
 
 
 
