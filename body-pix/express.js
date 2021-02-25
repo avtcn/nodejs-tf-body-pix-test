@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
 
+var images = require("images");
+
 // ------------------- bodypix 2 begin -------------------------- //
 
 const tf = require('@tensorflow/tfjs-node');
@@ -89,20 +91,29 @@ app.get('/get', function (req, res) {
 	res.end(JSON.stringify(response));
 })
 
-// http://127.0.0.1:8080/bodypix?image=ty2.jpg&imagenew=ty2.out.png&x=0&y=0&w=1280&h=720
+// http://127.0.0.1:8080/bodypix?image=ty.jpg&imagenew=ty.out.png&x=120&y=80&w=500&h=400
+// http://127.0.0.1:8080/bodypix?x=120&y=80&w=500&h=400
 app.get('/bodypix', function (req, res) {
 	console.log(req.query);
 
 	// var namein = 'ty.jpg'
 	// For absolute path, use the shared folder between Win Host OS and Docker Container
 	// /root/windocuments/git-local/nodejs-tf-body-pix-test/body-pix
-	var namein = "/root/windocuments/git-local/nodejs-tf-body-pix-test/body-pix/ty1.jpg"
-	var nameout = 'ty1_express_out.png'
+	// /root/windocuments/git-local/nodejs-tf-body-pix-test/body-pix
+	// var namein = 'ty.jpg'
+	var namein = '/root/windocuments/git-local/nodejs-tf-body-pix-test/body-pix/ty.jpg'
+	var nameout = 'ty_express_out.png'
+	var nameroi = 'ty_express_out_roi.jpg'
+	var nameroiextra = 'ty_express_out_roi_extract.png'
+	var namertranbg = 'ty_express_out_transparent_bg.png'
 
 	const ar_demo_snap_folder_base = '/root/windocuments/git-local/ar_demo_avt_camera/proj.win32/'
 	if (req.query.image) {
 		namein = ar_demo_snap_folder_base + path.basename(req.query.image);
 		nameout = ar_demo_snap_folder_base + path.basename(req.query.imagenew);
+		nameroi = ar_demo_snap_folder_base + nameroi;
+		nameroiextra = ar_demo_snap_folder_base + nameroiextra;
+		namertranbg = ar_demo_snap_folder_base + namertranbg;
 	}
 
 	//
@@ -110,12 +121,34 @@ app.get('/bodypix', function (req, res) {
 	// 识别ROI当中的人物
 	// 
 
-	const img = fs.readFileSync(namein); 
+
+    var origin;
+    origin = images(namein)                     //Load image from file 
+    console.log("Load origin: ", origin)
+
+    console.log("start roi ...");
+    // roi = images(origin, req.query.x, req.query.y, req.query.w, req.query.h);
+    roi = images(origin, parseInt(req.query.x), parseInt(req.query.y), 
+        parseInt(req.query.w), parseInt(req.query.h));
+    console.log("end   roi ...");
+    roi.save(nameroi); 
+    console.log("save  roi ...");
+
+    // tranparent blank image
+    transparentbg = images(origin.width(), origin.height())
+    transparentbg.save(namertranbg); 
+    console.log("save  bg ...");
+
+
+	const img = fs.readFileSync(nameroi); 
 
 	; (async () => {
 
-		var aires = await convertBG.removeBG(img, nameout); 
+		var aires = await convertBG.removeBG(img, nameroiextra); 
 		console.log(aires);
+
+        roiextra = images(nameroiextra);
+        transparentbg.draw(roiextra, parseInt(req.query.x), parseInt(req.query.y)).save(nameout);
 
 		var response = {
 			"ret": true,
