@@ -27,6 +27,11 @@ C:\Users\joe\Documents\git-local\nodejs-tf-body-pix-test\body-pix>yarn -v
 ## Commands
 `node index.js`
 
+For AR Demo - BodyPix Web Service:
+`node express.js`
+
+
+
 
 ## Screenshots
 ![](result.png)

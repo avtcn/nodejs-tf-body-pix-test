@@ -24,7 +24,8 @@ function RemoveBackground() {
             // modelUrl: 'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/bodypix/mobilenet/quant2/050/model-stride16.json' 
             // URL = 'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/bodypix/mobilenet/quant2/050/model-stride16.json';
 
-            URL = 'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/bodypix/resnet50/float/model-stride16.json'
+            // URL = 'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/bodypix/resnet50/float/model-stride16.json'
+            URL = 'file://../resnet50/model-stride16.json'
             // URL = 'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/bodypix/resnet50/quant2/model-stride16.json'
             const resNet = {
                 architecture: 'ResNet50', // very slow
@@ -37,6 +38,7 @@ function RemoveBackground() {
             this.bodymodel = await bodyPix.load(resNet);
             // this.bodymodel = await bodyPix.load();
             console.log(this.bodymodel);
+
 
         }
     }
