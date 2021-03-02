@@ -54,17 +54,35 @@ function RemoveBackground() {
         const bodySeg = await this.Prediction(tfimg);
         const jimp = await Jimp.read(img);
         let count = 0;
+        let count_transparent_pixels = 0;
         for (let i = 0; i < bodySeg.height; i++) {
             for (let j = 0; j < bodySeg.width; j++) {
                 if (bodySeg.data[count] === -1) {
                     jimp.setPixelColor(0x00000000, j, i);
+                    count_transparent_pixels++;
                 }
                 count++;
             }
         }
+        var percent_trans = count_transparent_pixels * 1.0 / count;
+        console.log("removeBG(): count = ", count, ", transparent_count = ", count_transparent_pixels,
+            ", percent_trans = ", percent_trans);
+        var ret = (percent_trans < 0.9000);
+
+        // For AR Demo to use
+        const ar_demo_snap_folder_base = '/root/windocuments/git-local/ar_demo_avt_camera/proj.win32/'
+        var logger = fs.createWriteStream(ar_demo_snap_folder_base + 'snapshot-image-extract-results.txt', {
+            flags: 'w' // 'a' means appending (old data will be preserved), 'w' means overwrite
+        }) 
+        logger.write(ret.toString()) // append string to your file
+        logger.write("\n") 
+        logger.write(percent_trans.toString()) // again
+        logger.write("\n") 
+        logger.close();
 
         await jimp.writeAsync(output);
-        return true;
+
+        return ret;
     }
 
 
@@ -147,13 +165,13 @@ app.get('/bodypix', function (req, res) {
 	; (async () => {
 
 		var aires = await convertBG.removeBG(img, nameroiextra); 
-		console.log(aires);
+		console.log("convertBG.removeBG() return:", aires);
 
         roiextra = images(nameroiextra);
         transparentbg.draw(roiextra, parseInt(req.query.x), parseInt(req.query.y)).save(nameout);
 
 		var response = {
-			"ret": true,
+			"ret": aires,  // true: extract figure successfully; false: not found!
 			"output": nameout
 		};
 		console.log(response);
