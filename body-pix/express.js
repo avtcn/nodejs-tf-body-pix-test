@@ -67,7 +67,7 @@ function RemoveBackground() {
         var percent_trans = count_transparent_pixels * 1.0 / count;
         console.log("removeBG(): count = ", count, ", transparent_count = ", count_transparent_pixels,
             ", percent_trans = ", percent_trans);
-        var ret = (percent_trans < 0.9000);
+        var ret = (percent_trans < 0.95);
 
         // For AR Demo to use
         const ar_demo_snap_folder_base = '/root/windocuments/git-local/ar_demo_avt_camera/proj.win32/'
