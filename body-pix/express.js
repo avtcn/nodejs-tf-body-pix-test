@@ -75,9 +75,9 @@ function RemoveBackground() {
             flags: 'w' // 'a' means appending (old data will be preserved), 'w' means overwrite
         }) 
         logger.write(ret.toString()) // append string to your file
-        logger.write("\n") 
+        logger.write("\r\n") 
         logger.write(percent_trans.toString()) // again
-        logger.write("\n") 
+        logger.write("\r\n") 
         logger.close();
 
         await jimp.writeAsync(output);
