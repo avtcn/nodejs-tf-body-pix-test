@@ -122,6 +122,7 @@ app.get('/bodypix', function (req, res) {
 	// /root/windocuments/git-local/nodejs-tf-body-pix-test/body-pix
 	// var namein = 'ty.jpg'
 	var namein = '/root/windocuments/git-local/nodejs-tf-body-pix-test/body-pix/ty.jpg'
+	// var namein = 'ty3.png'
 	var nameout = 'ty_express_out.png'
 	var nameroi = 'ty_express_out_roi.jpg'
 	var nameroiextra = 'ty_express_out_roi_extract.png'
@@ -148,8 +149,17 @@ app.get('/bodypix', function (req, res) {
 
     console.log("start roi ...");
     // roi = images(origin, req.query.x, req.query.y, req.query.w, req.query.h);
-    roi = images(origin, parseInt(req.query.x), parseInt(req.query.y), 
-        parseInt(req.query.w), parseInt(req.query.h));
+
+    // Only center of ROI is focused.
+    cw = parseInt(req.query.w) / 3; 
+    ch = parseInt(req.query.h);
+    cx = parseInt(req.query.x) + cw;
+    cy = parseInt(req.query.y);
+
+    // roi = images(origin, parseInt(req.query.x), parseInt(req.query.y), 
+    //     parseInt(req.query.w), parseInt(req.query.h));
+    roi = images(origin, cx, cy, cw, ch);
+
     console.log("end   roi ...");
     roi.save(nameroi); 
     console.log("save  roi ...");
@@ -168,7 +178,8 @@ app.get('/bodypix', function (req, res) {
 		console.log("convertBG.removeBG() return:", aires);
 
         roiextra = images(nameroiextra);
-        transparentbg.draw(roiextra, parseInt(req.query.x), parseInt(req.query.y)).save(nameout);
+        // transparentbg.draw(roiextra, parseInt(req.query.x), parseInt(req.query.y)).save(nameout);
+        transparentbg.draw(roiextra, cx, cy).save(nameout);
 
 		var response = {
 			"ret": aires,  // true: extract figure successfully; false: not found!
